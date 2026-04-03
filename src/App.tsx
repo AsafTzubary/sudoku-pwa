@@ -58,18 +58,18 @@ const App: React.FC = () => {
       <div className="min-h-screen bg-black transition-colors flex flex-col items-center justify-center p-6">
         <div className="w-full max-w-md space-y-12 text-center">
           <div className="space-y-2">
-            <h1 className="text-6xl font-black text-white tracking-tighter">SUDOKU</h1>
-            <p className="text-slate-500 font-medium tracking-widest uppercase text-xs">Distraction Free</p>
+            <h1 className="text-6xl font-black text-white/90 tracking-tighter">SUDOKU</h1>
+            <p className="text-slate-600 font-medium tracking-[0.3em] uppercase text-[10px]">Distraction Free</p>
           </div>
 
-          <div className="space-y-4">
-            <p className="text-sm font-bold text-slate-400 uppercase tracking-widest">Select Difficulty</p>
-            <div className="grid grid-cols-1 gap-3">
+          <div className="space-y-6">
+            <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Select Difficulty</p>
+            <div className="grid grid-cols-1 gap-4">
               {difficulties.map((d) => (
                 <button
                   key={d.value}
                   onClick={() => newGame(d.value)}
-                  className="w-full py-4 rounded-2xl font-black text-xl bg-slate-900 text-slate-200 hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-3 border-2 border-slate-800 hover:border-blue-500"
+                  className="w-full py-5 rounded-2xl font-black text-xl bg-slate-900/50 text-slate-300 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-3 border-2 border-slate-900 hover:border-blue-600/50 hover:text-white hover:bg-slate-900"
                 >
                   {d.label}
                 </button>
@@ -92,7 +92,7 @@ const App: React.FC = () => {
         </main>
 
         <footer className="py-4 text-center">
-          <p className="text-[10px] font-bold text-slate-700 uppercase tracking-[0.2em]">
+          <p className="text-[10px] font-bold text-slate-800 uppercase tracking-[0.2em]">
             Distraction-Free Sudoku
           </p>
         </footer>

@@ -33,7 +33,7 @@ const Controls: React.FC = () => {
               e.preventDefault();
               setCellValue(num);
             }}
-            className="aspect-[1/1.4] bg-slate-800 rounded-lg flex items-center justify-center text-xl font-bold text-slate-300 active:scale-95 transition-transform hover:bg-slate-700 border border-slate-700"
+            className="aspect-[1/1.4] bg-slate-900 rounded-lg flex items-center justify-center text-xl font-bold text-slate-300 active:scale-95 transition-transform hover:bg-slate-800 border border-slate-800 hover:text-white"
           >
             {num}
           </button>
@@ -49,12 +49,12 @@ const Controls: React.FC = () => {
           className={cn(
             "flex-1 flex items-center justify-center gap-2 py-4 rounded-xl font-semibold transition-all",
             pencilMode 
-              ? "bg-blue-600 text-white shadow-lg shadow-blue-500/30" 
-              : "bg-slate-800 text-slate-400 border border-slate-700"
+              ? "bg-blue-600/20 text-blue-400 border border-blue-500/50 shadow-[0_0_15px_rgba(59,130,246,0.1)]" 
+              : "bg-slate-900 text-slate-500 border border-slate-800 hover:text-slate-300"
           )}
         >
-          <Pencil size={20} />
-          <span>Pencil {pencilMode ? 'On' : 'Off'}</span>
+          <Pencil size={18} />
+          <span className="text-sm">Pencil {pencilMode ? 'On' : 'Off'}</span>
         </button>
 
         <button
@@ -62,10 +62,10 @@ const Controls: React.FC = () => {
             e.preventDefault();
             eraseCell();
           }}
-          className="flex-1 flex items-center justify-center gap-2 py-4 rounded-xl font-semibold bg-slate-800 text-slate-400 border border-slate-700 active:scale-95 transition-transform"
+          className="flex-1 flex items-center justify-center gap-2 py-4 rounded-xl font-semibold bg-slate-900 text-slate-500 border border-slate-800 active:scale-95 transition-transform hover:text-slate-300"
         >
-          <Eraser size={20} />
-          <span>Erase</span>
+          <Eraser size={18} />
+          <span className="text-sm">Erase</span>
         </button>
 
         {isTrivial && (
@@ -74,10 +74,10 @@ const Controls: React.FC = () => {
               e.preventDefault();
               autoComplete();
             }}
-            className="flex-1 flex items-center justify-center gap-2 py-4 rounded-xl font-semibold bg-green-600 text-white shadow-lg shadow-green-500/30 animate-pulse active:scale-95 transition-transform"
+            className="flex-1 flex items-center justify-center gap-2 py-4 rounded-xl font-semibold bg-green-600/20 text-green-400 border border-green-500/50 shadow-[0_0_15px_rgba(34,197,94,0.1)] animate-pulse active:scale-95 transition-transform"
           >
-            <CheckCircle size={20} />
-            <span>Finish</span>
+            <CheckCircle size={18} />
+            <span className="text-sm">Finish</span>
           </button>
         )}
       </div>

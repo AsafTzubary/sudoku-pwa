@@ -1,12 +1,20 @@
 @import "tailwindcss";
 
 :root {
-  --action-color: #3b82f6;
+  /* Premium Dark Mode Palette */
   --bg-color: #000000;
-  --text-color: #ffffff;
-  --thin-border: #334155;
-  --thick-border: #ffffff;
-  --highlight-related: #414769b3;
+  --surface-color: #111827;
+  --text-initial: #f8fafc;
+  --text-user: #60a5fa;
+  --text-error: #f87171;
+  --text-pencil: #64748b;
+  
+  --thin-border: #1e293b;
+  --thick-border: #475569;
+  
+  --highlight-selected: rgba(96, 165, 250, 0.3);
+  --highlight-related: rgba(255, 255, 255, 0.04);
+  --highlight-same: rgba(96, 165, 250, 0.12);
 }
 
 html {
@@ -16,50 +24,46 @@ html {
 
 body {
   background-color: var(--bg-color);
-  color: var(--text-color);
-  @apply transition-colors duration-200;
+  color: var(--text-initial);
+  @apply transition-colors duration-200 antialiased;
 }
 
+/* Grid System */
 .sudoku-grid {
   display: grid;
   grid-template-columns: repeat(9, 1fr);
   aspect-ratio: 1 / 1;
+  background-color: var(--bg-color);
   border-top: 2px solid var(--thick-border);
   border-left: 2px solid var(--thick-border);
-  background-color: var(--bg-color);
-  overflow: hidden;
-}
-
-.cell {
-  background-color: var(--cell-bg);
-  @apply flex items-center justify-center text-2xl font-medium relative cursor-pointer select-none;
-  /* Use borders instead of gaps to prevent color bleeding */
-  border-right: 1px solid var(--thin-border);
-  border-bottom: 1px solid var(--thin-border);
+  border-right: 2px solid var(--thick-border);
+  border-bottom: 2px solid var(--thick-border);
   box-sizing: border-box;
 }
 
-/* Thick borders for 3x3 blocks */
-/* Right borders for columns 3, 6, and 9 */
+.cell {
+  background-color: var(--bg-color);
+  @apply flex items-center justify-center text-2xl font-medium relative cursor-pointer select-none;
+  border-right: 1px solid var(--thin-border);
+  border-bottom: 1px solid var(--thin-border);
+  box-sizing: border-box;
+  transition: background-color 0.1s ease;
+}
+
+/* Bold 3x3 Block Separation */
 .cell:nth-child(9n+3),
 .cell:nth-child(9n+6) {
   border-right: 2px solid var(--thick-border);
 }
 
-.cell:nth-child(9n) {
-  border-right: 2px solid var(--thick-border);
-}
-
-/* Bottom borders for rows 3, 6, and 9 */
 .cell:nth-child(n+19):nth-child(-n+27),
-.cell:nth-child(n+46):nth-child(-n+54),
-.cell:nth-child(n+73):nth-child(-n+81) {
+.cell:nth-child(n+46):nth-child(-n+54) {
   border-bottom: 2px solid var(--thick-border);
 }
 
-/* Cell states */
+/* Cell States */
 .cell.selected {
-  background-color: rgba(59, 130, 246, 0.4);
+  background-color: var(--highlight-selected);
 }
 
 .cell.highlighted {
@@ -67,30 +71,38 @@ body {
 }
 
 .cell.same-number {
-  background-color: rgba(59, 130, 246, 0.2);
+  background-color: var(--highlight-same);
 }
 
 .cell.error {
-  color: #ef4444;
-  background-color: rgba(239, 68, 68, 0.2);
+  color: var(--text-error);
+  background-color: rgba(248, 113, 113, 0.1);
 }
 
 .cell.initial {
+  color: var(--text-initial);
   @apply font-bold;
 }
 
+.cell.user-number {
+  color: var(--text-user);
+}
+
+/* Pencil Grid */
 .pencil-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   width: 100%;
   height: 100%;
-  padding: 2px;
+  padding: 1px;
 }
 
 .pencil-note {
-  @apply text-[10px] leading-none flex items-center justify-center text-slate-400;
+  @apply text-[9px] leading-none flex items-center justify-center;
+  color: var(--text-pencil);
 }
 
-.text-action {
-  color: #3b82f6;
+/* Global Transitions */
+button {
+  @apply transition-all duration-150;
 }

@@ -34,51 +34,51 @@ const Header: React.FC = () => {
   return (
     <div className="w-full pt-8 pb-1 flex flex-col gap-2">
       <div className="flex items-center justify-between">
-        <span className="text-2xl font-black tracking-tight text-white">SUDOKU</span>
+        <span className="text-2xl font-black tracking-tight text-white/90">SUDOKU</span>
 
         <button 
           onClick={handleReset}
-          className="p-2 bg-slate-800 rounded-full text-slate-400 active:scale-90 transition-transform"
+          className="p-2 bg-slate-900 rounded-full text-slate-400 active:scale-90 transition-transform hover:text-slate-200 border border-slate-800"
         >
-          <RefreshCw size={20} />
+          <RefreshCw size={18} />
         </button>
       </div>
 
-      <div className="flex items-center justify-between bg-slate-800/50 p-2 px-3 rounded-xl border border-slate-800">
+      <div className="flex items-center justify-between bg-slate-950 p-2 px-3 rounded-xl border border-slate-900">
         <div className="flex items-center gap-2">
-          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Mistakes</span>
+          <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Mistakes</span>
           <div className="flex gap-1">
             {[1, 2, 3].map(i => (
               <div 
                 key={i} 
-                className={`w-1.5 h-1.5 rounded-full ${i <= mistakes ? 'bg-red-500' : 'bg-slate-700'}`}
+                className={`w-1.5 h-1.5 rounded-full transition-colors duration-300 ${i <= mistakes ? 'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.5)]' : 'bg-slate-800'}`}
               />
             ))}
           </div>
         </div>
 
         <div className="flex items-center gap-3">
-          <span className="text-sm font-mono font-bold text-slate-300">
+          <span className="text-sm font-mono font-medium text-slate-400">
             {formatTime(timer)}
           </span>
           <button 
             onClick={togglePause}
-            className="p-1 bg-slate-700 shadow-sm rounded-md text-slate-300"
+            className="p-1 bg-slate-900 shadow-sm rounded-md text-slate-400 border border-slate-800 hover:text-slate-200"
           >
-            {status === 'paused' ? <Play size={14} fill="currentColor" /> : <Pause size={14} fill="currentColor" />}
+            {status === 'paused' ? <Play size={12} fill="currentColor" /> : <Pause size={12} fill="currentColor" />}
           </button>
         </div>
       </div>
 
       {status === 'won' && (
-        <div className="flex items-center gap-3 bg-green-900/30 p-3 rounded-xl border border-green-800/50 text-green-400 animate-in zoom-in-95 duration-300">
-          <Trophy size={20} className="animate-bounce" />
+        <div className="flex items-center gap-3 bg-green-950/40 p-3 rounded-xl border border-green-900/50 text-green-400 animate-in zoom-in-95 duration-300">
+          <Trophy size={18} className="animate-bounce" />
           <div className="flex-1">
             <h3 className="text-sm font-bold">Victory!</h3>
           </div>
           <button 
             onClick={resetGame}
-            className="bg-green-500 text-white px-3 py-1.5 rounded-lg text-xs font-bold"
+            className="bg-green-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold shadow-lg shadow-green-900/20"
           >
             New Game
           </button>
@@ -86,14 +86,14 @@ const Header: React.FC = () => {
       )}
 
       {status === 'lost' && (
-        <div className="flex items-center gap-3 bg-red-900/30 p-3 rounded-xl border border-red-800/50 text-red-400 animate-in zoom-in-95 duration-300">
-          <AlertTriangle size={20} />
+        <div className="flex items-center gap-3 bg-red-950/40 p-3 rounded-xl border border-red-900/50 text-red-400 animate-in zoom-in-95 duration-300">
+          <AlertTriangle size={18} />
           <div className="flex-1">
             <h3 className="text-sm font-bold">Game Over</h3>
           </div>
           <button 
             onClick={resetGame}
-            className="bg-red-500 text-white px-3 py-1.5 rounded-lg text-xs font-bold"
+            className="bg-red-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold shadow-lg shadow-red-900/20"
           >
             Restart
           </button>

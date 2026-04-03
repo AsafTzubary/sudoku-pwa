@@ -46,7 +46,7 @@ const SudokuBoard: React.FC = () => {
   }
 
   return (
-    <div className="sudoku-grid w-full border-2 border-slate-900 dark:border-slate-100 rounded-sm overflow-hidden bg-slate-400 dark:bg-slate-600 gap-[1px]">
+    <div className="sudoku-grid w-full rounded-sm overflow-hidden">
       {board.map((value, index) => (
         <Cell 
           key={index} 
@@ -85,12 +85,12 @@ const Cell: React.FC<CellProps> = ({ index, value, isInitial, isSelected, isHigh
         onClick();
       }}
       className={cn(
-        "cell bg-white dark:bg-slate-900 h-full w-full transition-colors flex items-center justify-center",
+        "cell transition-colors flex items-center justify-center",
         isSelected && "selected",
         !isSelected && isSameNumber && "same-number",
         !isSelected && !isSameNumber && isHighlighted && "highlighted",
-        isInitial ? "text-slate-900 dark:text-white font-bold" : "text-action font-normal",
-        isError && "text-red-500 bg-red-50 dark:bg-red-900/20"
+        isInitial ? "initial" : "user-number",
+        isError && "error"
       )}
     >
       {value !== null ? (
