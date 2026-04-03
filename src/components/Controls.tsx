@@ -16,7 +16,8 @@ const Controls: React.FC = () => {
     togglePencilMode, 
     status,
     checkTrivialStatus,
-    autoComplete
+    autoComplete,
+    actionColor
   } = useGameStore();
 
   const isTrivial = checkTrivialStatus();
@@ -29,7 +30,10 @@ const Controls: React.FC = () => {
         {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(num => (
           <button
             key={num}
-            onClick={() => setCellValue(num)}
+            onPointerDown={(e) => {
+              e.preventDefault();
+              setCellValue(num);
+            }}
             className="aspect-square bg-slate-100 dark:bg-slate-800 rounded-lg flex items-center justify-center text-xl font-bold text-slate-700 dark:text-slate-300 active:scale-95 transition-transform hover:bg-slate-200 dark:hover:bg-slate-700"
           >
             {num}
@@ -39,20 +43,27 @@ const Controls: React.FC = () => {
 
       <div className="flex items-center justify-between gap-4">
         <button
-          onClick={togglePencilMode}
+          onPointerDown={(e) => {
+            e.preventDefault();
+            togglePencilMode();
+          }}
           className={cn(
             "flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-semibold transition-all",
             pencilMode 
-              ? "bg-action text-white shadow-lg shadow-action/30" 
+              ? "text-white shadow-lg" 
               : "bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400"
           )}
+          style={pencilMode ? { backgroundColor: actionColor, boxShadow: `0 10px 15px -3px ${actionColor}4D` } : {}}
         >
           <Pencil size={20} />
           <span>Pencil {pencilMode ? 'On' : 'Off'}</span>
         </button>
 
         <button
-          onClick={eraseCell}
+          onPointerDown={(e) => {
+            e.preventDefault();
+            eraseCell();
+          }}
           className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-semibold bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 active:scale-95 transition-transform"
         >
           <Eraser size={20} />
@@ -61,7 +72,10 @@ const Controls: React.FC = () => {
 
         {isTrivial && (
           <button
-            onClick={autoComplete}
+            onPointerDown={(e) => {
+              e.preventDefault();
+              autoComplete();
+            }}
             className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-semibold bg-green-500 text-white shadow-lg shadow-green-200 dark:shadow-green-900/20 animate-bounce active:scale-95 transition-transform"
           >
             <CheckCircle size={20} />

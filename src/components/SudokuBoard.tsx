@@ -46,7 +46,7 @@ const SudokuBoard: React.FC = () => {
   }
 
   return (
-    <div className="sudoku-grid w-full border-2 border-slate-900 dark:border-slate-100 rounded-sm overflow-hidden bg-slate-900 dark:bg-slate-100 gap-[1px]">
+    <div className="sudoku-grid w-full border-2 border-slate-900 dark:border-slate-100 rounded-sm overflow-hidden bg-slate-400 dark:bg-slate-600 gap-[1px]">
       {board.map((value, index) => (
         <Cell 
           key={index} 
@@ -79,19 +79,22 @@ const Cell: React.FC<CellProps> = ({ index, value, isInitial, isSelected, isHigh
 
   return (
     <div 
-      onClick={onClick}
+      onClick={(e) => {
+        e.stopPropagation();
+        onClick();
+      }}
       className={cn(
-        "cell bg-white dark:bg-slate-900 h-full w-full transition-colors",
-        isSelected && "bg-action/40",
-        !isSelected && isSameNumber && "bg-action/25",
-        !isSelected && !isSameNumber && isHighlighted && "bg-action/10",
-        isInitial ? "text-slate-900 dark:text-white" : "text-action font-normal"
+        "cell bg-white dark:bg-slate-900 h-full w-full transition-colors flex items-center justify-center",
+        isSelected && "selected",
+        !isSelected && isSameNumber && "same-number",
+        !isSelected && !isSameNumber && isHighlighted && "highlighted",
+        isInitial ? "text-slate-900 dark:text-white font-bold" : "text-action font-normal"
       )}
     >
       {value !== null ? (
-        <span>{value}</span>
+        <span className="pointer-events-none">{value}</span>
       ) : (
-        <div className="pencil-grid">
+        <div className="pencil-grid pointer-events-none">
           {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(num => (
             <div key={num} className="pencil-note">
               {marks.includes(num) ? num : ''}
