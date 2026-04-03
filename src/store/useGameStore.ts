@@ -91,17 +91,18 @@ export const useGameStore = create<GameState>()(
         } else {
           if (board[selectedCell] === value) return;
 
+          const newBoard = [...board];
+          newBoard[selectedCell] = value;
+          
           if (value !== solution[selectedCell]) {
             const newMistakes = mistakes + 1;
             set({ 
+              board: newBoard,
               mistakes: newMistakes,
               status: newMistakes >= 3 ? 'lost' : 'playing'
             });
             return;
           }
-
-          const newBoard = [...board];
-          newBoard[selectedCell] = value;
           
           const newPencilMarks = [...pencilMarks];
           const row = Math.floor(selectedCell / 9);

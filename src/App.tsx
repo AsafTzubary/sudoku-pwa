@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useGameStore, Difficulty } from './store/useGameStore';
 import Header from './components/Header';
 import SudokuBoard from './components/SudokuBoard';

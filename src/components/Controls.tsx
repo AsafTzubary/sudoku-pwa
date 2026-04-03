@@ -16,8 +16,7 @@ const Controls: React.FC = () => {
     togglePencilMode, 
     status,
     checkTrivialStatus,
-    autoComplete,
-    actionColor
+    autoComplete
   } = useGameStore();
 
   const isTrivial = checkTrivialStatus();
@@ -50,10 +49,9 @@ const Controls: React.FC = () => {
           className={cn(
             "flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-semibold transition-all",
             pencilMode 
-              ? "text-white shadow-lg" 
+              ? "bg-blue-500 text-white shadow-lg shadow-blue-500/30" 
               : "bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400"
           )}
-          style={pencilMode ? { backgroundColor: actionColor, boxShadow: `0 10px 15px -3px ${actionColor}4D` } : {}}
         >
           <Pencil size={20} />
           <span>Pencil {pencilMode ? 'On' : 'Off'}</span>

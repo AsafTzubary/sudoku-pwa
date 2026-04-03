@@ -74,8 +74,9 @@ interface CellProps {
 }
 
 const Cell: React.FC<CellProps> = ({ index, value, isInitial, isSelected, isHighlighted, isSameNumber, onClick }) => {
-  const { pencilMarks } = useGameStore();
+  const { pencilMarks, solution } = useGameStore();
   const marks = pencilMarks[index];
+  const isError = value !== null && !isInitial && value !== solution[index];
 
   return (
     <div 
@@ -88,7 +89,8 @@ const Cell: React.FC<CellProps> = ({ index, value, isInitial, isSelected, isHigh
         isSelected && "selected",
         !isSelected && isSameNumber && "same-number",
         !isSelected && !isSameNumber && isHighlighted && "highlighted",
-        isInitial ? "text-slate-900 dark:text-white font-bold" : "text-action font-normal"
+        isInitial ? "text-slate-900 dark:text-white font-bold" : "text-action font-normal",
+        isError && "text-red-500 bg-red-50 dark:bg-red-900/20"
       )}
     >
       {value !== null ? (
