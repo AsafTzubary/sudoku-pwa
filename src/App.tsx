@@ -3,28 +3,21 @@ import { useGameStore, Difficulty } from './store/useGameStore';
 import Header from './components/Header';
 import SudokuBoard from './components/SudokuBoard';
 import Controls from './components/Controls';
-import { Moon, Sun } from 'lucide-react';
 
 const App: React.FC = () => {
   const { 
-    theme, 
     status, 
     newGame, 
     setCellValue,
     eraseCell,
     selectCell,
-    selectedCell,
-    setTheme
+    selectedCell
   } = useGameStore();
   
-  // Apply theme to HTML element
+  // Force dark mode
   useEffect(() => {
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, [theme]);
+    document.documentElement.classList.add('dark');
+  }, []);
 
   // Keyboard support
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
@@ -62,20 +55,11 @@ const App: React.FC = () => {
 
   if (status === 'idle') {
     return (
-      <div className="min-h-screen bg-white dark:bg-black transition-colors flex flex-col items-center justify-center p-6">
-        <div className="absolute top-6 right-6">
-          <button 
-            onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
-            className="p-3 bg-slate-100 dark:bg-slate-800 rounded-full text-slate-500 dark:text-slate-400 active:scale-90 transition-transform"
-          >
-            {theme === 'light' ? <Moon size={24} /> : <Sun size={24} />}
-          </button>
-        </div>
-
+      <div className="min-h-screen bg-black transition-colors flex flex-col items-center justify-center p-6">
         <div className="w-full max-w-md space-y-12 text-center">
           <div className="space-y-2">
-            <h1 className="text-6xl font-black text-slate-900 dark:text-white tracking-tighter">SUDOKU</h1>
-            <p className="text-slate-500 dark:text-slate-400 font-medium tracking-widest uppercase text-xs">Distraction Free</p>
+            <h1 className="text-6xl font-black text-white tracking-tighter">SUDOKU</h1>
+            <p className="text-slate-500 font-medium tracking-widest uppercase text-xs">Distraction Free</p>
           </div>
 
           <div className="space-y-4">
@@ -85,7 +69,7 @@ const App: React.FC = () => {
                 <button
                   key={d.value}
                   onClick={() => newGame(d.value)}
-                  className="w-full py-4 rounded-2xl font-black text-xl bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-3 border-2 border-slate-200 dark:border-slate-700 hover:border-blue-500"
+                  className="w-full py-4 rounded-2xl font-black text-xl bg-slate-900 text-slate-200 hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-3 border-2 border-slate-800 hover:border-blue-500"
                 >
                   {d.label}
                 </button>
@@ -98,7 +82,7 @@ const App: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black transition-colors flex flex-col items-center p-4">
+    <div className="min-h-screen bg-black transition-colors flex flex-col items-center p-4">
       <div className="w-full max-w-md flex flex-col gap-6">
         <Header />
         
@@ -108,7 +92,7 @@ const App: React.FC = () => {
         </main>
 
         <footer className="py-4 text-center">
-          <p className="text-[10px] font-bold text-slate-300 dark:text-slate-700 uppercase tracking-[0.2em]">
+          <p className="text-[10px] font-bold text-slate-700 uppercase tracking-[0.2em]">
             Distraction-Free Sudoku
           </p>
         </footer>

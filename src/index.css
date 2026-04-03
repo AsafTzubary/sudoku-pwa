@@ -2,14 +2,6 @@
 
 :root {
   --action-color: #3b82f6;
-  --bg-color: #ffffff;
-  --text-color: #0f172a;
-  --grid-bg: #e2e8f0;
-  --cell-bg: #ffffff;
-  --thick-border: #000000;
-}
-
-.dark {
   --bg-color: #000000;
   --text-color: #ffffff;
   --grid-bg: #334155;
@@ -19,9 +11,6 @@
 
 html {
   @apply transition-colors duration-200;
-}
-
-html.dark {
   color-scheme: dark;
 }
 
@@ -38,6 +27,7 @@ body {
   background-color: var(--grid-bg);
   gap: 1px;
   border: 2px solid var(--thick-border);
+  overflow: hidden;
 }
 
 .cell {
@@ -45,39 +35,33 @@ body {
   @apply flex items-center justify-center text-2xl font-medium relative cursor-pointer select-none;
 }
 
-/* Clearer 3x3 separation using borders on specific cells */
-/* Right borders for columns 3 and 6 */
+/* Clearer 3x3 separation by overriding the grid-bg gap color locally */
 .cell:nth-child(9n+3),
 .cell:nth-child(9n+6) {
   border-right: 2px solid var(--thick-border);
 }
 
-/* Bottom borders for rows 3 and 6 */
 .cell:nth-child(n+19):nth-child(-n+27),
 .cell:nth-child(n+46):nth-child(-n+54) {
   border-bottom: 2px solid var(--thick-border);
 }
 
-/* Cell states */
+/* Cell states - Highly transparent for related cells */
 .cell.selected {
-  background-color: #3b82f64D; /* Blue 30% opacity */
+  background-color: rgba(59, 130, 246, 0.35);
 }
 
 .cell.highlighted {
-  background-color: #3b82f61A; /* Blue 10% opacity */
+  background-color: rgba(59, 130, 246, 0.05); /* Reduced from 10% to 5% */
 }
 
 .cell.same-number {
-  background-color: #3b82f633; /* Blue 20% opacity */
+  background-color: rgba(59, 130, 246, 0.15); /* Reduced from 20% to 15% */
 }
 
 .cell.error {
   color: #ef4444;
-  background-color: rgba(239, 68, 68, 0.1);
-}
-
-.dark .cell.error {
-  background-color: rgba(239, 68, 68, 0.2);
+  background-color: rgba(239, 68, 68, 0.15);
 }
 
 .cell.initial {
@@ -93,7 +77,7 @@ body {
 }
 
 .pencil-note {
-  @apply text-[10px] leading-none flex items-center justify-center text-slate-500 dark:text-slate-400;
+  @apply text-[10px] leading-none flex items-center justify-center text-slate-400;
 }
 
 .text-action {

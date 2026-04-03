@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useGameStore } from '../store/useGameStore';
-import { Play, Pause, RefreshCw, Trophy, AlertTriangle, Moon, Sun } from 'lucide-react';
+import { Play, Pause, RefreshCw, Trophy, AlertTriangle } from 'lucide-react';
 
 const Header: React.FC = () => {
   const { 
@@ -9,9 +9,7 @@ const Header: React.FC = () => {
     mistakes, 
     updateTimer, 
     togglePause,
-    resetGame,
-    theme,
-    setTheme
+    resetGame
   } = useGameStore();
 
   useEffect(() => {
@@ -34,63 +32,53 @@ const Header: React.FC = () => {
   };
 
   return (
-    <div className="w-full pt-8 pb-4 flex flex-col gap-4">
+    <div className="w-full pt-8 pb-1 flex flex-col gap-2">
       <div className="flex items-center justify-between">
-        <span className="text-2xl font-black tracking-tight">SUDOKU</span>
+        <span className="text-2xl font-black tracking-tight text-white">SUDOKU</span>
 
-        <div className="flex items-center gap-2">
-          <button 
-            onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
-            className="p-2 bg-slate-100 dark:bg-slate-800 rounded-full text-slate-500 dark:text-slate-400 active:scale-90 transition-transform"
-          >
-            {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
-          </button>
-          
-          <button 
-            onClick={handleReset}
-            className="p-2 bg-slate-100 dark:bg-slate-800 rounded-full text-slate-500 dark:text-slate-400 active:scale-90 transition-transform"
-          >
-            <RefreshCw size={20} />
-          </button>
-        </div>
+        <button 
+          onClick={handleReset}
+          className="p-2 bg-slate-800 rounded-full text-slate-400 active:scale-90 transition-transform"
+        >
+          <RefreshCw size={20} />
+        </button>
       </div>
 
-      <div className="flex items-center justify-between bg-slate-50 dark:bg-slate-800/50 p-3 rounded-2xl border border-slate-100 dark:border-slate-800">
+      <div className="flex items-center justify-between bg-slate-800/50 p-2 px-3 rounded-xl border border-slate-800">
         <div className="flex items-center gap-2">
-          <span className="text-sm font-bold text-slate-400 uppercase">Mistakes</span>
+          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Mistakes</span>
           <div className="flex gap-1">
             {[1, 2, 3].map(i => (
               <div 
                 key={i} 
-                className={`w-2 h-2 rounded-full ${i <= mistakes ? 'bg-red-500' : 'bg-slate-200 dark:bg-slate-700'}`}
+                className={`w-1.5 h-1.5 rounded-full ${i <= mistakes ? 'bg-red-500' : 'bg-slate-700'}`}
               />
             ))}
           </div>
         </div>
 
         <div className="flex items-center gap-3">
-          <span className="text-lg font-mono font-bold text-slate-700 dark:text-slate-300">
+          <span className="text-sm font-mono font-bold text-slate-300">
             {formatTime(timer)}
           </span>
           <button 
             onClick={togglePause}
-            className="p-1.5 bg-white dark:bg-slate-700 shadow-sm rounded-lg text-slate-600 dark:text-slate-300"
+            className="p-1 bg-slate-700 shadow-sm rounded-md text-slate-300"
           >
-            {status === 'paused' ? <Play size={16} fill="currentColor" /> : <Pause size={16} fill="currentColor" />}
+            {status === 'paused' ? <Play size={14} fill="currentColor" /> : <Pause size={14} fill="currentColor" />}
           </button>
         </div>
       </div>
 
       {status === 'won' && (
-        <div className="flex items-center gap-3 bg-green-100 dark:bg-green-900/30 p-4 rounded-2xl border border-green-200 dark:border-green-800/50 text-green-700 dark:text-green-400 animate-in zoom-in-95 duration-300">
-          <Trophy size={24} className="animate-bounce" />
+        <div className="flex items-center gap-3 bg-green-900/30 p-3 rounded-xl border border-green-800/50 text-green-400 animate-in zoom-in-95 duration-300">
+          <Trophy size={20} className="animate-bounce" />
           <div className="flex-1">
-            <h3 className="font-bold">Victory!</h3>
-            <p className="text-xs">You solved it in {formatTime(timer)}.</p>
+            <h3 className="text-sm font-bold">Victory!</h3>
           </div>
           <button 
             onClick={resetGame}
-            className="bg-green-500 text-white px-4 py-2 rounded-xl text-sm font-bold shadow-lg shadow-green-500/30"
+            className="bg-green-500 text-white px-3 py-1.5 rounded-lg text-xs font-bold"
           >
             New Game
           </button>
@@ -98,15 +86,14 @@ const Header: React.FC = () => {
       )}
 
       {status === 'lost' && (
-        <div className="flex items-center gap-3 bg-red-100 dark:bg-red-900/30 p-4 rounded-2xl border border-red-200 dark:border-red-800/50 text-red-700 dark:text-red-400 animate-in zoom-in-95 duration-300">
-          <AlertTriangle size={24} />
+        <div className="flex items-center gap-3 bg-red-900/30 p-3 rounded-xl border border-red-800/50 text-red-400 animate-in zoom-in-95 duration-300">
+          <AlertTriangle size={20} />
           <div className="flex-1">
-            <h3 className="font-bold">Game Over</h3>
-            <p className="text-xs">3 strikes. Try again!</p>
+            <h3 className="text-sm font-bold">Game Over</h3>
           </div>
           <button 
             onClick={resetGame}
-            className="bg-red-500 text-white px-4 py-2 rounded-xl text-sm font-bold shadow-lg shadow-red-500/30"
+            className="bg-red-500 text-white px-3 py-1.5 rounded-lg text-xs font-bold"
           >
             Restart
           </button>
