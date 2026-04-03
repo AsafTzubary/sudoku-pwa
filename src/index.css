@@ -4,9 +4,9 @@
   --action-color: #3b82f6;
   --bg-color: #000000;
   --text-color: #ffffff;
-  --grid-bg: #334155;
-  --cell-bg: #000000;
+  --thin-border: #334155;
   --thick-border: #ffffff;
+  --highlight-related: #151b3b82;
 }
 
 html {
@@ -24,44 +24,55 @@ body {
   display: grid;
   grid-template-columns: repeat(9, 1fr);
   aspect-ratio: 1 / 1;
-  background-color: var(--grid-bg);
-  gap: 1px;
-  border: 2px solid var(--thick-border);
+  border-top: 2px solid var(--thick-border);
+  border-left: 2px solid var(--thick-border);
+  background-color: var(--bg-color);
   overflow: hidden;
 }
 
 .cell {
   background-color: var(--cell-bg);
   @apply flex items-center justify-center text-2xl font-medium relative cursor-pointer select-none;
+  /* Use borders instead of gaps to prevent color bleeding */
+  border-right: 1px solid var(--thin-border);
+  border-bottom: 1px solid var(--thin-border);
+  box-sizing: border-box;
 }
 
-/* Clearer 3x3 separation by overriding the grid-bg gap color locally */
+/* Thick borders for 3x3 blocks */
+/* Right borders for columns 3, 6, and 9 */
 .cell:nth-child(9n+3),
 .cell:nth-child(9n+6) {
   border-right: 2px solid var(--thick-border);
 }
 
+.cell:nth-child(9n) {
+  border-right: 2px solid var(--thick-border);
+}
+
+/* Bottom borders for rows 3, 6, and 9 */
 .cell:nth-child(n+19):nth-child(-n+27),
-.cell:nth-child(n+46):nth-child(-n+54) {
+.cell:nth-child(n+46):nth-child(-n+54),
+.cell:nth-child(n+73):nth-child(-n+81) {
   border-bottom: 2px solid var(--thick-border);
 }
 
-/* Cell states - Highly transparent for related cells */
+/* Cell states */
 .cell.selected {
-  background-color: rgba(59, 130, 246, 0.35);
+  background-color: rgba(59, 130, 246, 0.4);
 }
 
 .cell.highlighted {
-  background-color: rgba(59, 130, 246, 0.05); /* Reduced from 10% to 5% */
+  background-color: var(--highlight-related);
 }
 
 .cell.same-number {
-  background-color: rgba(59, 130, 246, 0.15); /* Reduced from 20% to 15% */
+  background-color: rgba(59, 130, 246, 0.2);
 }
 
 .cell.error {
   color: #ef4444;
-  background-color: rgba(239, 68, 68, 0.15);
+  background-color: rgba(239, 68, 68, 0.2);
 }
 
 .cell.initial {
