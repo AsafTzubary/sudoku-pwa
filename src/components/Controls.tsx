@@ -33,7 +33,7 @@ const Controls: React.FC = () => {
               e.preventDefault();
               setCellValue(num);
             }}
-            className="aspect-[1/1.4] bg-slate-900 rounded-lg flex items-center justify-center text-xl font-bold text-slate-300 active:scale-95 transition-transform hover:bg-slate-800 border border-slate-800 hover:text-white"
+            className="aspect-[1/1.8] bg-slate-900 rounded-lg flex items-center justify-center text-xl font-bold text-slate-300 active:scale-95 transition-transform hover:bg-slate-800 border border-slate-800 hover:text-white"
           >
             {num}
           </button>

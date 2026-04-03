@@ -86,7 +86,7 @@ const App: React.FC = () => {
       <div className="w-full max-w-md flex flex-col gap-6">
         <Header />
         
-        <main className="flex-1 flex flex-col gap-8">
+        <main className="flex-1 flex flex-col gap-4">
           <SudokuBoard />
           <Controls />
         </main>
