@@ -21,6 +21,12 @@ const Header: React.FC = () => {
     return () => clearInterval(interval);
   }, [updateTimer]);
 
+  const handleReset = () => {
+    if (window.confirm('Are you sure you want to restart the game?')) {
+      resetGame();
+    }
+  };
+
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
@@ -28,9 +34,9 @@ const Header: React.FC = () => {
   };
 
   return (
-    <div className="w-full py-4 flex flex-col gap-4">
+    <div className="w-full pt-8 pb-4 flex flex-col gap-4">
       <div className="flex items-center justify-between">
-        <span className="text-2xl font-black text-slate-800 dark:text-white tracking-tight">SUDOKU</span>
+        <span className="text-2xl font-black tracking-tight">SUDOKU</span>
 
         <div className="flex items-center gap-2">
           <button 
@@ -41,7 +47,7 @@ const Header: React.FC = () => {
           </button>
           
           <button 
-            onClick={resetGame}
+            onClick={handleReset}
             className="p-2 bg-slate-100 dark:bg-slate-800 rounded-full text-slate-500 dark:text-slate-400 active:scale-90 transition-transform"
           >
             <RefreshCw size={20} />

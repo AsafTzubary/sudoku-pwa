@@ -3,7 +3,7 @@ import { useGameStore, Difficulty } from './store/useGameStore';
 import Header from './components/Header';
 import SudokuBoard from './components/SudokuBoard';
 import Controls from './components/Controls';
-import { Play, Moon, Sun } from 'lucide-react';
+import { Moon, Sun } from 'lucide-react';
 
 const App: React.FC = () => {
   const { 
@@ -62,7 +62,7 @@ const App: React.FC = () => {
 
   if (status === 'idle') {
     return (
-      <div className="min-h-screen bg-white dark:bg-slate-900 transition-colors flex flex-col items-center justify-center p-6">
+      <div className="min-h-screen bg-white dark:bg-black transition-colors flex flex-col items-center justify-center p-6">
         <div className="absolute top-6 right-6">
           <button 
             onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
@@ -75,7 +75,7 @@ const App: React.FC = () => {
         <div className="w-full max-w-md space-y-12 text-center">
           <div className="space-y-2">
             <h1 className="text-6xl font-black text-slate-900 dark:text-white tracking-tighter">SUDOKU</h1>
-            <p className="text-slate-500 dark:text-slate-400 font-medium tracking-widest uppercase text-xs">Distraction Free PWA</p>
+            <p className="text-slate-500 dark:text-slate-400 font-medium tracking-widest uppercase text-xs">Distraction Free</p>
           </div>
 
           <div className="space-y-4">
@@ -87,7 +87,6 @@ const App: React.FC = () => {
                   onClick={() => newGame(d.value)}
                   className="w-full py-4 rounded-2xl font-black text-xl bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-3 border-2 border-slate-200 dark:border-slate-700 hover:border-blue-500"
                 >
-                  <Play size={24} fill="currentColor" />
                   {d.label}
                 </button>
               ))}
@@ -99,7 +98,7 @@ const App: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-slate-900 transition-colors flex flex-col items-center p-4">
+    <div className="min-h-screen bg-white dark:bg-black transition-colors flex flex-col items-center p-4">
       <div className="w-full max-w-md flex flex-col gap-6">
         <Header />
         
@@ -110,7 +109,7 @@ const App: React.FC = () => {
 
         <footer className="py-4 text-center">
           <p className="text-[10px] font-bold text-slate-300 dark:text-slate-700 uppercase tracking-[0.2em]">
-            Distraction-Free Sudoku PWA
+            Distraction-Free Sudoku
           </p>
         </footer>
       </div>
