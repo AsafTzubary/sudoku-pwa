@@ -1,16 +1,17 @@
 import React, { useEffect } from 'react';
-import { useGameStore, Difficulty } from '../store/useGameStore';
-import { Settings, Play, Pause, RefreshCw, Trophy, AlertTriangle } from 'lucide-react';
+import { useGameStore } from '../store/useGameStore';
+import { Play, Pause, RefreshCw, Trophy, AlertTriangle, Moon, Sun } from 'lucide-react';
 
-const Header: React.FC<{ onSettingsOpen: () => void }> = ({ onSettingsOpen }) => {
+const Header: React.FC = () => {
   const { 
     status, 
     timer, 
     mistakes, 
-    difficulty, 
-    newGame, 
     updateTimer, 
-    togglePause 
+    togglePause,
+    resetGame,
+    theme,
+    setTheme
   } = useGameStore();
 
   useEffect(() => {
@@ -26,31 +27,21 @@ const Header: React.FC<{ onSettingsOpen: () => void }> = ({ onSettingsOpen }) =>
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
-  const difficultyLabels: Record<Difficulty, string> = {
-    easy: 'Easy',
-    medium: 'Medium',
-    hard: 'Hard',
-    expert: 'Extreme'
-  };
-
   return (
     <div className="w-full py-4 flex flex-col gap-4">
       <div className="flex items-center justify-between">
-        <div className="flex flex-col">
-          <span className="text-2xl font-black text-slate-800 dark:text-white tracking-tight">SUDOKU</span>
-          <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">{difficultyLabels[difficulty]}</span>
-        </div>
+        <span className="text-2xl font-black text-slate-800 dark:text-white tracking-tight">SUDOKU</span>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2">
           <button 
-            onClick={onSettingsOpen}
+            onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
             className="p-2 bg-slate-100 dark:bg-slate-800 rounded-full text-slate-500 dark:text-slate-400 active:scale-90 transition-transform"
           >
-            <Settings size={20} />
+            {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
           </button>
           
           <button 
-            onClick={() => newGame(difficulty)}
+            onClick={resetGame}
             className="p-2 bg-slate-100 dark:bg-slate-800 rounded-full text-slate-500 dark:text-slate-400 active:scale-90 transition-transform"
           >
             <RefreshCw size={20} />
@@ -89,10 +80,10 @@ const Header: React.FC<{ onSettingsOpen: () => void }> = ({ onSettingsOpen }) =>
           <Trophy size={24} className="animate-bounce" />
           <div className="flex-1">
             <h3 className="font-bold">Victory!</h3>
-            <p className="text-xs">You solved the puzzle in {formatTime(timer)}.</p>
+            <p className="text-xs">You solved it in {formatTime(timer)}.</p>
           </div>
           <button 
-            onClick={() => newGame(difficulty)}
+            onClick={resetGame}
             className="bg-green-500 text-white px-4 py-2 rounded-xl text-sm font-bold shadow-lg shadow-green-500/30"
           >
             New Game
@@ -105,10 +96,10 @@ const Header: React.FC<{ onSettingsOpen: () => void }> = ({ onSettingsOpen }) =>
           <AlertTriangle size={24} />
           <div className="flex-1">
             <h3 className="font-bold">Game Over</h3>
-            <p className="text-xs">3 strikes and you're out. Try again!</p>
+            <p className="text-xs">3 strikes. Try again!</p>
           </div>
           <button 
-            onClick={() => newGame(difficulty)}
+            onClick={resetGame}
             className="bg-red-500 text-white px-4 py-2 rounded-xl text-sm font-bold shadow-lg shadow-red-500/30"
           >
             Restart

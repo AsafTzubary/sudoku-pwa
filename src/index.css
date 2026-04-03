@@ -1,14 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  --action-color: #3b82f6; /* Default Blue */
+  --action-color: #3b82f6;
 }
 
 @theme {
   --color-action: var(--action-color);
 }
 
-/* Base styles */
 html {
   @apply transition-colors duration-200;
 }
@@ -21,44 +20,41 @@ body {
   @apply bg-white text-slate-900 dark:bg-slate-900 dark:text-white transition-colors duration-200;
 }
 
-/* Sudoku Grid specific styles */
 .sudoku-grid {
   display: grid;
   grid-template-columns: repeat(9, 1fr);
   aspect-ratio: 1 / 1;
+  /* Use a single border color for the grid gaps */
+  @apply bg-slate-300 dark:bg-slate-700;
+  gap: 1px;
 }
 
 .cell {
-  @apply border-slate-400 dark:border-slate-500 flex items-center justify-center text-2xl font-medium relative cursor-pointer select-none;
-  border-width: 0.5px;
+  @apply bg-white dark:bg-slate-900 flex items-center justify-center text-2xl font-medium relative cursor-pointer select-none;
 }
 
-/* Thicker borders for 3x3 blocks */
-/* Right borders for columns 3 and 6 */
-.cell:nth-child(9n+3),
-.cell:nth-child(9n+6) { 
-  border-right-width: 3px; 
-  @apply border-slate-900 dark:border-slate-100;
+/* Thicker borders for 3x3 blocks by targeting the grid background */
+.cell:nth-child(9n+4),
+.cell:nth-child(9n+7) {
+  margin-left: 2px;
 }
 
-/* Bottom borders for rows 3 and 6 */
 .cell:nth-child(n+19):nth-child(-n+27),
-.cell:nth-child(n+46):nth-child(-n+54) { 
-  border-bottom-width: 3px; 
-  @apply border-slate-900 dark:border-slate-100;
+.cell:nth-child(n+46):nth-child(-n+54) {
+  margin-top: 2px;
 }
 
-/* Cell states using CSS variables for reliability */
+/* Cell states */
 .cell.selected {
-  background-color: color-mix(in srgb, var(--action-color), transparent 70%);
+  background-color: #3b82f64D; /* Blue 30% opacity */
 }
 
 .cell.highlighted {
-  background-color: color-mix(in srgb, var(--action-color), transparent 90%);
+  background-color: #3b82f61A; /* Blue 10% opacity */
 }
 
 .cell.same-number {
-  background-color: color-mix(in srgb, var(--action-color), transparent 80%);
+  background-color: #3b82f633; /* Blue 20% opacity */
 }
 
 .cell.error {
@@ -81,12 +77,6 @@ body {
   @apply text-[10px] leading-none flex items-center justify-center text-slate-500 dark:text-slate-400;
 }
 
-/* Custom button styles to use action color */
-.btn-primary {
-  background-color: var(--action-color);
-  @apply text-white shadow-lg;
-}
-
 .text-action {
-  color: var(--action-color);
+  color: #3b82f6;
 }

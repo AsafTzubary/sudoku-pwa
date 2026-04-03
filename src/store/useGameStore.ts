@@ -9,17 +9,17 @@ interface GameState {
   board: (number | null)[];
   initialBoard: (number | null)[];
   solution: number[];
-  pencilMarks: number[][]; // Array of sets of numbers (using arrays for JSON serialization)
+  pencilMarks: number[][];
   selectedCell: number | null;
   mistakes: number;
   timer: number;
   status: 'playing' | 'won' | 'lost' | 'paused' | 'idle';
   pencilMode: boolean;
   theme: 'light' | 'dark';
-  actionColor: string;
 
   // Actions
   newGame: (difficulty: Difficulty) => void;
+  resetGame: () => void;
   selectCell: (index: number | null) => void;
   setCellValue: (value: number) => void;
   eraseCell: () => void;
@@ -27,7 +27,6 @@ interface GameState {
   togglePause: () => void;
   updateTimer: () => void;
   setTheme: (theme: 'light' | 'dark') => void;
-  setActionColor: (color: string) => void;
   autoComplete: () => void;
   checkTrivialStatus: () => boolean;
 }
@@ -54,11 +53,9 @@ export const useGameStore = create<GameState>()(
       status: 'idle',
       pencilMode: false,
       theme: 'light',
-      actionColor: '#3b82f6',
 
       newGame: (difficulty: Difficulty) => {
         const { puzzle, solution } = getSudoku(difficulty); 
-        
         set({
           difficulty,
           board: parseBoard(puzzle),
@@ -72,6 +69,8 @@ export const useGameStore = create<GameState>()(
           pencilMode: false
         });
       },
+
+      resetGame: () => set({ status: 'idle', selectedCell: null }),
 
       selectCell: (index: number | null) => set({ selectedCell: index }),
 
@@ -90,7 +89,7 @@ export const useGameStore = create<GameState>()(
           newPencilMarks[selectedCell] = newMarks;
           set({ pencilMarks: newPencilMarks });
         } else {
-          if (board[selectedCell] === value) return; // Already there
+          if (board[selectedCell] === value) return;
 
           if (value !== solution[selectedCell]) {
             const newMistakes = mistakes + 1;
@@ -98,15 +97,12 @@ export const useGameStore = create<GameState>()(
               mistakes: newMistakes,
               status: newMistakes >= 3 ? 'lost' : 'playing'
             });
-            // Brief visual feedback handled in component? 
-            // We'll still update board to show the wrong number briefly or just count mistake
             return;
           }
 
           const newBoard = [...board];
           newBoard[selectedCell] = value;
           
-          // Auto-erase pencil marks
           const newPencilMarks = [...pencilMarks];
           const row = Math.floor(selectedCell / 9);
           const col = selectedCell % 9;
@@ -125,7 +121,6 @@ export const useGameStore = create<GameState>()(
           }
 
           const isWon = newBoard.every((cell, idx) => cell === solution[idx]);
-
           set({ 
             board: newBoard, 
             pencilMarks: newPencilMarks,
@@ -140,10 +135,8 @@ export const useGameStore = create<GameState>()(
         
         const newBoard = [...board];
         newBoard[selectedCell] = null;
-        
         const newPencilMarks = [...pencilMarks];
         newPencilMarks[selectedCell] = [];
-
         set({ board: newBoard, pencilMarks: newPencilMarks });
       },
 
@@ -161,18 +154,11 @@ export const useGameStore = create<GameState>()(
       }),
 
       setTheme: (theme: 'light' | 'dark') => set({ theme }),
-      
-      setActionColor: (color: string) => {
-        document.documentElement.style.setProperty('--action-color', color);
-        set({ actionColor: color });
-      },
 
       checkTrivialStatus: () => {
         const { board, status } = get();
         if (status !== 'playing') return false;
         const emptyCells = board.filter(c => c === null).length;
-        // User definition: "trivial" (e.g. 15 or less free cells & all cells are either last in row/col/square or depend on cells that are last...)
-        // Simplified heuristic: if 15 or fewer cells remain, we'll allow auto-complete button.
         return emptyCells > 0 && emptyCells <= 15;
       },
 
