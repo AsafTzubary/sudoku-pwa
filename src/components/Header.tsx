@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useGameStore } from '../store/useGameStore';
 import { Play, Pause, RefreshCw, Trophy, AlertTriangle } from 'lucide-react';
+import ConfirmModal from './ConfirmModal';
 
 const Header: React.FC = () => {
   const { 
@@ -12,6 +13,8 @@ const Header: React.FC = () => {
     resetGame
   } = useGameStore();
 
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+
   useEffect(() => {
     const interval = setInterval(() => {
       updateTimer();
@@ -20,9 +23,7 @@ const Header: React.FC = () => {
   }, [updateTimer]);
 
   const handleReset = () => {
-    if (window.confirm('Are you sure you want to restart the game?')) {
-      resetGame();
-    }
+    setIsConfirmOpen(true);
   };
 
   const formatTime = (seconds: number) => {
@@ -43,6 +44,14 @@ const Header: React.FC = () => {
           <RefreshCw size={18} />
         </button>
       </div>
+
+      <ConfirmModal
+        isOpen={isConfirmOpen}
+        onClose={() => setIsConfirmOpen(false)}
+        onConfirm={resetGame}
+        title="Restart Game"
+        message="Are you sure you want to restart? Your current progress will be lost."
+      />
 
       <div className="flex items-center justify-between bg-slate-950 p-2 px-3 rounded-xl border border-slate-900">
         <div className="flex items-center gap-2">

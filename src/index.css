@@ -12,9 +12,10 @@
   --thin-border: #1e293b;
   --thick-border: #475569;
   
-  --highlight-selected: rgba(96, 165, 250, 0.3);
-  --highlight-related: rgba(255, 255, 255, 0.04);
-  --highlight-same: rgba(96, 165, 250, 0.12);
+  --highlight-selected: rgba(96, 165, 250, 0.4);
+  --highlight-related: rgba(255, 255, 255, 0.08);
+  --highlight-same: rgba(96, 165, 250, 0.25);
+  --text-error: #ff4d4d;
 }
 
 html {

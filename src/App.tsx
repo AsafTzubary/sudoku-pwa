@@ -91,7 +91,7 @@ const App: React.FC = () => {
           <Controls />
         </main>
 
-        <footer className="py-4 text-center">
+        <footer className="py-2 text-center">
           <p className="text-[10px] font-bold text-slate-800 uppercase tracking-[0.2em]">
             Distraction-Free Sudoku
           </p>

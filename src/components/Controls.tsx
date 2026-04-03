@@ -10,6 +10,8 @@ function cn(...inputs: ClassValue[]) {
 
 const Controls: React.FC = () => {
   const { 
+    board,
+    solution,
     setCellValue, 
     eraseCell, 
     pencilMode, 
@@ -23,23 +25,12 @@ const Controls: React.FC = () => {
 
   if (status !== 'playing') return null;
 
-  return (
-    <div className="w-full space-y-4">
-      <div className="grid grid-cols-9 gap-1.5">
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(num => (
-          <button
-            key={num}
-            onPointerDown={(e) => {
-              e.preventDefault();
-              setCellValue(num);
-            }}
-            className="aspect-[1/1.8] bg-slate-900 rounded-lg flex items-center justify-center text-xl font-bold text-slate-300 active:scale-95 transition-transform hover:bg-slate-800 border border-slate-800 hover:text-white"
-          >
-            {num}
-          </button>
-        ))}
-      </div>
+  const getNumberCount = (num: number) => {
+    return board.filter((v, i) => v === num && v === solution[i]).length;
+  };
 
+  return (
+    <div className="w-full space-y-6">
       <div className="flex items-center justify-between gap-4">
         <button
           onPointerDown={(e) => {
@@ -80,6 +71,32 @@ const Controls: React.FC = () => {
             <span className="text-sm">Finish</span>
           </button>
         )}
+      </div>
+
+      <div className="grid grid-cols-9 gap-1.5">
+        {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(num => {
+          const count = getNumberCount(num);
+          const isComplete = count >= 9;
+          
+          return (
+            <button
+              key={num}
+              onPointerDown={(e) => {
+                e.preventDefault();
+                if (!isComplete) setCellValue(num);
+              }}
+              className={cn(
+                "aspect-[1/1.8] rounded-lg flex items-center justify-center text-xl font-bold transition-all border",
+                isComplete 
+                  ? "bg-black text-transparent border-transparent cursor-default pointer-events-none" 
+                  : "bg-slate-900 text-slate-300 active:scale-95 hover:bg-slate-800 border-slate-800 hover:text-white"
+              )}
+              disabled={isComplete}
+            >
+              {!isComplete && num}
+            </button>
+          );
+        })}
       </div>
     </div>
   );
