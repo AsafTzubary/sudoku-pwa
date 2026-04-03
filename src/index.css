@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+:root {
+  --action-color: #3b82f6; /* Default Blue */
+}
+
+@theme {
+  --color-action: var(--action-color);
+}
+
+body {
+  @apply bg-white text-slate-900 transition-colors duration-200;
+}
+
+.dark body {
+  @apply bg-slate-900 text-white;
+}
+
+/* Sudoku Grid specific styles */
+.sudoku-grid {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  aspect-ratio: 1 / 1;
+}
+
+.cell {
+  @apply border-slate-300 dark:border-slate-700 flex items-center justify-center text-2xl font-medium relative cursor-pointer select-none;
+  border-width: 0.5px;
+}
+
+/* Thicker borders for 3x3 blocks */
+.cell:nth-child(3n) { border-right-width: 2px; }
+.cell:nth-child(9n) { border-right-width: 0.5px; }
+.cell:nth-child(n+19):nth-child(-n+27),
+.cell:nth-child(n+46):nth-child(-n+54) { border-bottom-width: 2px; }
+
+.cell.selected {
+  @apply bg-action/30;
+}
+
+.cell.highlighted {
+  @apply bg-action/10;
+}
+
+.cell.same-number {
+  @apply bg-action/20;
+}
+
+.cell.error {
+  @apply text-red-500 bg-red-100 dark:bg-red-900/30;
+}
+
+.cell.initial {
+  @apply font-bold;
+}
+
+.pencil-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 100%;
+  height: 100%;
+  padding: 2px;
+}
+
+.pencil-note {
+  @apply text-[10px] leading-none flex items-center justify-center text-slate-500 dark:text-slate-400;
+}
